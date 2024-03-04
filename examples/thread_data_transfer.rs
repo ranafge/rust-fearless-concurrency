@@ -13,7 +13,7 @@ fn main() {
         tx.send(val).unwrap();
     });
 
-    println!("Received value is {}", rx.recv().unwrap());
+    // println!("Received value is {}", rx.recv().unwrap());
 
     // try_recv() does not wait for the recinving value except recv
 
@@ -25,18 +25,16 @@ fn main() {
         let val = vec![1, 2, 3, 4, 5, 6, 7,8];
         // send is return a Result when it is drop its return an error
         tx.send(val).unwrap();
-    });
-    
-    
- 
         
-    thread::spawn( move ||{
-        let v = vec![1,2,33333];
-        tx2.send(v).unwrap();
-    
-    
     });
     
+    thread::spawn(move || {
+        let val = vec![1, 2, 3, 4, 5, 6, 7,111111118];
+        // send is return a Result when it is drop its return an error
+        tx2.send(val).unwrap();
+    }).join().unwrap();
+    // here need join() method because main thread completed before the completion complet the above thread
+
 
     
     for v_item in rx.recv().unwrap() {
@@ -71,3 +69,4 @@ mod tests {
         assert_eq!(rx.recv().unwrap(),  vec![1, 2, 3, 4, 5, 6, 7])
     }
 }
+// https://doc.rust-lang.org/book/ch16-03-shared-state.html
