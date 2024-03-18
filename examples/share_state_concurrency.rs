@@ -22,4 +22,7 @@ fn main() {
     //     *num = 6;
     // };
     // println!("m = {:?}", m);
+
+
+    // shared a value beteen threads
 }
